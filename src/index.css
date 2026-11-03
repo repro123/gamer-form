@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+body {
+  background-image: url("./assets/images/pattern-backdrop.svg");
+  background-position: right center;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 767px) {
+  body {
+    background-image: none;
+  }
+}
+
 @theme {
   --font-orbitron: "Orbitron", sans-serif;
   --font-jetbrains: "Jetbrains Mono", sans-serif;
@@ -18,6 +30,8 @@
   --color-lime-700: #80a621;
   --color-red-400: #ff837a;
   --color-amber-400: #ffc44d;
+
+  --color-navy-950: #020508;
 
   /* transparent */
   --color-lime-alpha-60: #bff53899;
@@ -87,4 +101,8 @@
 
 @utility preset-7 {
   font: 400 0.75rem/133.33% var(--font-jetbrains);
+}
+
+@utility shadow-navy {
+  box-shadow: 0px 24px 64px -16px var(--color-navy-alpha-80);
 }
