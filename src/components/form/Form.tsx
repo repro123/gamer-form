@@ -22,6 +22,10 @@ interface FormInputDataProps {
   autoComplete?: string;
 }
 
+interface FormProps {
+  className?: string;
+}
+
 const formInputsData: FormInputDataProps[] = [
   { label: "callsign", type: "text", placeholder: "e.g Vortex_07", name: "callsign", autoComplete: "username" },
   { label: "email", type: "email", placeholder: "you@example.com", name: "email", autoComplete: "email" },
@@ -41,7 +45,7 @@ const formInputsData: FormInputDataProps[] = [
   },
 ];
 
-function Form() {
+function Form({ className = "" }: FormProps) {
   const {
     register,
     handleSubmit,
@@ -73,7 +77,7 @@ function Form() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="px-5 py-8 md:p-10 shadow-navy bg-neutral-900 border border-neutral-700 grid gap-6 relative"
+      className={`px-5 py-8 md:p-10 shadow-navy bg-neutral-900 border border-neutral-700 grid gap-6 relative mt-8 lg:mt-0 ${className}`}
       noValidate
     >
       <FormHeading />

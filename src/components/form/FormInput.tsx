@@ -19,7 +19,7 @@ function FormInput({ id, type, placeholder, autoComplete, isValid, ...rest }: Fo
     <div className="relative">
       <input
         type={inputType}
-        className={`bg-neutral-950 border h-12 w-full block text-neutral-100 preset-4 px-4 focus-visible:outline-offset-2 ${isPasswordInput ? "pr-24" : "pr-14"} ${!isValid ? "border-red-400 focus-visible:outline focus-visible:outline-red-400" : "border-neutral-600 focus-visible:border-lime-500 focus-visible:outline focus-visible:outline-lime-500"}`}
+        className={`bg-neutral-950 border h-12 w-full block text-neutral-100 preset-4 px-4 border-neutral-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:border-lime-500 focus-visible:outline-lime-500 aria-invalid:border-red-400 aria-invalid:focus-visible:border-red-400 aria-invalid:focus-visible:outline-red-400 ${isPasswordInput ? "pr-24" : "pr-14"}`}
         id={id}
         placeholder={placeholder}
         autoComplete={autoComplete}
