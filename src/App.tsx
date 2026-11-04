@@ -1,15 +1,14 @@
 import Form from "@/components/form/Form";
+import DesktopView from "@/components/views/DesktopView";
+import MobileView from "@/components/views/MobileView";
 
 function App() {
   return (
-    <main className="w-full">
-      <div className="w-full mx-auto max-w-7xl p-4">
-        <section></section>
+    <main className="w-full mx-auto max-w-360 p-4 lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-12">
+      <MobileView />
+      <DesktopView />
 
-        <section>
-          <Form />
-        </section>
-      </div>
+      <Form />
     </main>
   );
 }
