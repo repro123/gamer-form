@@ -10,11 +10,11 @@ import { type FormValues } from "@/lib/schema/RegisterSchema";
 import FormError from "@/components/form/FormError";
 import FormPasswordStrength from "@/components/form/FormPasswordStrength";
 import FormInputTip from "@/components/form/FormInputTip";
-import FormCornerBorders from "@/components/form/FormCornerBorders";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { createSalt, hashPassword } from "@/lib/auth/hash";
 import { users } from "@/lib/store/auth";
+import { checkDuplicateUser } from "@/lib/auth/user";
 
 interface FormInputDataProps {
   label: string;
@@ -48,12 +48,30 @@ const formInputsData: FormInputDataProps[] = [
 ];
 
 function Form({ className = "" }: FormProps) {
-  const { register, handleSubmit, getFieldState } = useFormContext<FormValues>();
+  const { register, handleSubmit, getFieldState, setError } = useFormContext<FormValues>();
   const [shake, setShake] = useState(false);
 
-  const { errors, isSubmitSuccessful, isSubmitting } = useFormState<FormValues>();
+  const { errors, isSubmitting } = useFormState<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    const { emailExists, callsignExists } = checkDuplicateUser(data.email, data.callsign);
+
+    if (emailExists) {
+      setError("email", {
+        type: "manual",
+        message: "An account with this email already exists.",
+      });
+    }
+
+    if (callsignExists) {
+      setError("callsign", {
+        type: "manual",
+        message: "This callsign is already taken.",
+      });
+    }
+
+    if (emailExists || callsignExists) return;
+
     const salt = createSalt();
     const passwordHash = await hashPassword(data.password, salt);
 
