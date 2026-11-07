@@ -26,6 +26,9 @@ importers:
       react-hook-form:
         specifier: ^7.91.0
         version: 7.91.0(@types/react@19.3.0)(react@19.3.1)
+      stunk:
+        specifier: ^3.1.1
+        version: 3.1.1(react@19.3.1)
       tailwindcss:
         specifier: ^4.3.3
         version: 4.3.3
@@ -1290,6 +1293,17 @@ packages:
     resolution: {integrity: sha512-KGj/8Y43x35aZVDtt+J4mK1hoLGHULMYfSkODJNQjNDC3oW1PqPoxMwo0pLUsWM/UEGzON/NxeHywEfNXNP3Vw==}
     engines: {node: '>=0.10.0'}
 
+  stunk@3.1.1:
+    resolution: {integrity: sha512-5Ts4vgg8gKzgHTVZkEzfhRPVo8VwIHSx5+YshX6gMLQ93moJW2u9U/Do5UAoWtLjcgkP1eFGEyK3S+vNw6gtsw==}
+    peerDependencies:
+      react: ^17.0.0 || ^18.0.0 || ^19.0.0
+      vue: ^3.5.13
+    peerDependenciesMeta:
+      react:
+        optional: true
+      vue:
+        optional: true
+
   tailwindcss@4.3.3:
     resolution: {integrity: sha512-gOhV3P7ufE62QDGg1zVaTgCR+EtPv92k2nIhVcVKcLmxT1sUBsQGhnZj175j+MqRt4zLF7ic+sCYjfhxMxj7YQ==}
 
@@ -2382,6 +2396,10 @@ snapshots:
   shebang-regex@3.0.0: {}
 
   source-map-js@1.2.2: {}
+
+  stunk@3.1.1(react@19.3.1):
+    optionalDependencies:
+      react: 19.3.1
 
   tailwindcss@4.3.3: {}
 
