@@ -1,4 +1,4 @@
-import { useFormState, useWatch } from "react-hook-form";
+import { useFormState } from "react-hook-form";
 import type { FormValues } from "@/lib/schema/RegisterSchema";
 import Form from "@/components/form/Form";
 import FormCornerBorders from "@/components/form/FormCornerBorders";
