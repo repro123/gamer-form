@@ -25,7 +25,6 @@ function App() {
         <MobileView />
         <DesktopView />
 
-        {/* <Form /> */}
         <FormCard />
       </main>
     </FormProvider>

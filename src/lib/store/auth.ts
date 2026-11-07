@@ -1,5 +1,4 @@
 import { chunk } from "stunk";
-import { persist } from "stunk/middleware";
 
 export type StoredUser = {
   callsign: string;
@@ -8,4 +7,4 @@ export type StoredUser = {
   passwordHash: string;
 };
 
-export const users = persist(chunk<StoredUser[]>([]), { key: "users" });
+export const users = chunk<StoredUser[]>([]);
