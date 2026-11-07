@@ -1,14 +1,20 @@
 import HexCheck from "@/assets/images/icon-hex-check.svg";
 import { useWatch } from "react-hook-form";
 import type { FormValues } from "@/lib/schema/RegisterSchema";
+import { useEffect, useRef } from "react";
 
-export default function SuccessPanel() {
+export default function SuccessPanel({ isActive }: { isActive: boolean }) {
   const callsign = useWatch<FormValues, "callsign">({ name: "callsign" });
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    if (isActive) headingRef.current?.focus();
+  }, [isActive]);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4" role="status" aria-live="polite" aria-atomic="true">
       <img src={HexCheck} alt="" className="size-28" />
-      <h2 className="text-neutral-100 preset-2">
+      <h2 ref={headingRef} tabIndex={-1} className="text-neutral-100 preset-2">
         <span className="text-lime-500">//</span> handshake complete
       </h2>
       <p className="text-neutral-300 preset-4">

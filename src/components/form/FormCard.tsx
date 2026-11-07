@@ -24,7 +24,7 @@ function FormCard() {
           className="col-start-1 row-start-1 backface-hidden rotate-y-180 grid place-content-center gap-4 border border-neutral-700 bg-neutral-900 p-10"
           inert={!registrationSucceeded}
         >
-          <SuccessPanel />
+          <SuccessPanel isActive={registrationSucceeded} />
         </div>
       </div>
 

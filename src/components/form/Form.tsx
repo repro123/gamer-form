@@ -1,4 +1,4 @@
-import FormHeading from "@/components/form/FormHeading";
+﻿import FormHeading from "@/components/form/FormHeading";
 import FormInput from "@/components/form/FormInput";
 import FormLabel from "@/components/form/FormLabel";
 
@@ -92,8 +92,10 @@ function Form({ className = "", onRegistrationSuccess }: FormProps) {
   };
 
   return (
-    <form
+    <>
+      <form
       onSubmit={handleSubmit(onSubmit, () => setShake(true))}
+      aria-busy={isSubmitting}
       onAnimationEnd={(e) => {
         if (e.target === e.currentTarget) setShake(false);
       }}
@@ -105,6 +107,8 @@ function Form({ className = "", onRegistrationSuccess }: FormProps) {
       {formInputsData.map((data) => {
         const error = errors[data.name]?.message;
         const isValid = getFieldState(data.name).isDirty && !getFieldState(data.name).invalid;
+        const hintId = data.name === "callsign" || data.name === "password" ? `${data.name}-hint` : undefined;
+        const describedBy = [hintId, error ? `${data.name}-error` : undefined].filter(Boolean).join(" ") || undefined;
 
         return (
           <div key={data.name} className="grid gap-2">
@@ -114,7 +118,7 @@ function Form({ className = "", onRegistrationSuccess }: FormProps) {
               type={data.type}
               placeholder={data.placeholder}
               aria-invalid={!!error}
-              aria-describedby={error ? `${data.name}-error` : undefined}
+              aria-describedby={describedBy}
               autoComplete={data.autoComplete}
               isValid={isValid}
               isSubmitting={isSubmitting}
@@ -124,9 +128,9 @@ function Form({ className = "", onRegistrationSuccess }: FormProps) {
                 }),
               })}
             />
-            {!error && data.name === "callsign" && <FormInputTip tip="3–20 characters: letters, numbers, _ or -" />}
+            {data.name === "callsign" && <FormInputTip id="callsign-hint" tip="3–20 characters: letters, numbers, _or-" />}
             {data.name === "password" && <FormPasswordStrength />}
-            {!error && data.name === "password" && <FormInputTip tip="At least 8 characters" />}
+            {data.name === "password" && <FormInputTip id="password-hint" tip="At least 8 characters" />}
             {error && <FormError id={`${data.name}-error`} message={error} />}
           </div>
         );
@@ -137,8 +141,10 @@ function Form({ className = "", onRegistrationSuccess }: FormProps) {
           <input
             type="checkbox"
             disabled={isSubmitting}
+            aria-invalid={!!errors.terms}
+            aria-describedby={errors.terms ? "terms-error" : undefined}
             {...register("terms")}
-            className={`size-4 appearance-none border bg-neutral-950 checked:bg-lime-500 checked:border-lime-500 checked:after:content-['✓'] checked:after:text-neutral-950 checked:after:flex checked:after:items-center checked:after:justify-center checked:after:text-xs checked:after:font-bold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500 cursor-pointer ${errors.terms?.message ? "border-red-400" : "border-neutral-600"}`}
+            className={`size-4 appearance-none border bg-neutral-950 checked:bg-lime-500 checked:border-lime-500 checked:after:content-['âœ“'] checked:after:text-neutral-950 checked:after:flex checked:after:items-center checked:after:justify-center checked:after:text-xs checked:after:font-bold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500 cursor-pointer ${errors.terms?.message ? "border-red-400" : "border-neutral-600"}`}
           />
 
           <span>
@@ -152,7 +158,7 @@ function Form({ className = "", onRegistrationSuccess }: FormProps) {
             </a>
           </span>
         </label>
-        {errors.terms?.message && <FormError message={errors.terms.message} />}
+        {errors.terms?.message && <FormError id="terms-error" message={errors.terms.message} />}
       </div>
 
       {errors.root?.submit?.message && <FormError message={errors.root.submit.message} />}
@@ -164,14 +170,17 @@ function Form({ className = "", onRegistrationSuccess }: FormProps) {
       >
         {isSubmitting ? "initializing_" : "initialize account"}
       </button>
-
       <p className="text-neutral-300 preset-5 text-center">
         Already an operator?{" "}
         <a href="/login" className="text-lime-500 hover:underline">
           Log In
         </a>
       </p>
-    </form>
+      </form>
+      <span className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+        {isSubmitting ? "Creating your account. Please wait." : ""}
+      </span>
+    </>
   );
 }
 
