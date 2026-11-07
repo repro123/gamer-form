@@ -72,10 +72,20 @@ function Form({ className = "" }: FormProps) {
 
     if (emailExists || callsignExists) return;
 
-    const salt = createSalt();
-    const passwordHash = await hashPassword(data.password, salt);
+    try {
+      const salt = createSalt();
+      const passwordHash = await hashPassword(data.password, salt);
 
-    users.set((prev) => [...prev, { callsign: data.callsign, email: data.email, salt, passwordHash }]);
+      // Keep the simulated request visible long enough for the loading state to register.
+      await new Promise((resolve) => setTimeout(resolve, 800));
+
+      users.set((prev) => [...prev, { callsign: data.callsign, email: data.email, salt, passwordHash }]);
+    } catch {
+      setError("root.submit", {
+        type: "server",
+        message: "We couldn't complete registration. Please try again.",
+      });
+    }
   };
 
   return (
@@ -141,6 +151,8 @@ function Form({ className = "" }: FormProps) {
         </label>
         {errors.terms?.message && <FormError message={errors.terms.message} />}
       </div>
+
+      {errors.root?.submit?.message && <FormError message={errors.root.submit.message} />}
 
       <button
         type="submit"
