@@ -26,6 +26,7 @@ interface FormInputDataProps {
 
 interface FormProps {
   className?: string;
+  onRegistrationSuccess: () => void;
 }
 
 const formInputsData: FormInputDataProps[] = [
@@ -47,13 +48,14 @@ const formInputsData: FormInputDataProps[] = [
   },
 ];
 
-function Form({ className = "" }: FormProps) {
-  const { register, handleSubmit, getFieldState, setError } = useFormContext<FormValues>();
+function Form({ className = "", onRegistrationSuccess }: FormProps) {
+  const { register, handleSubmit, getFieldState, setError, clearErrors } = useFormContext<FormValues>();
   const [shake, setShake] = useState(false);
 
   const { errors, isSubmitting } = useFormState<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    clearErrors("root.submit");
     const { emailExists, callsignExists } = checkDuplicateUser(data.email, data.callsign);
 
     if (emailExists) {
@@ -80,6 +82,7 @@ function Form({ className = "" }: FormProps) {
       await new Promise((resolve) => setTimeout(resolve, 800));
 
       users.set((prev) => [...prev, { callsign: data.callsign, email: data.email, salt, passwordHash }]);
+      onRegistrationSuccess();
     } catch {
       setError("root.submit", {
         type: "server",
