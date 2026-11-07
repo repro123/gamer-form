@@ -38,6 +38,23 @@ body {
   --color-lime-alpha-40: #bff53866;
   --color-navy-alpha-80: #020508cc;
   --color-navy-alpha-60: #02050899;
+
+  --animate-shake: shake 0.4s ease-in-out;
+
+  @keyframes shake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    20%,
+    60% {
+      transform: translateX(-6px);
+    }
+    40%,
+    80% {
+      transform: translateX(6px);
+    }
+  }
 }
 
 /* Heading presets */
