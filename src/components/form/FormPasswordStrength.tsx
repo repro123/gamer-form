@@ -1,23 +1,14 @@
-const LEVELS = [
-  { label: "", color: "", textColor: "" },
-  { label: "weak", color: "bg-red-400", textColor: "text-red-400" },
-  { label: "fair", color: "bg-amber-400", textColor: "text-amber-400" },
-  { label: "good", color: "bg-yellow-400", textColor: "text-yellow-400" },
-  { label: "strong", color: "bg-lime-500", textColor: "text-lime-500" },
-];
+import {  useWatch } from "react-hook-form";
+import { type FormValues } from "@/lib/schema/RegisterSchema";
+import { LEVELS } from "@/lib/data/password-levels";
+import { getScore } from "@/lib/utils/utilities";
 
-function getScore(pw: string) {
-  if (!pw) return 0;
-  if (pw.length < 8) return 1; // too short caps at weak
+function FormPasswordStrength() {
 
-  let score = 1;
-  if (/[a-z]/.test(pw) && /[A-Z]/.test(pw)) score++;
-  if (/\d/.test(pw)) score++;
-  if (/[^A-Za-z0-9]/.test(pw)) score++;
-  return score;
-}
+  const password = useWatch<FormValues, "password">({
+    name: "password",
+  });
 
-function FormPasswordStrength({ password }: { password: string }) {
   const score = getScore(password);
   const { label, color, textColor } = LEVELS[score];
 
