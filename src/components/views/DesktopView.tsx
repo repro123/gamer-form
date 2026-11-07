@@ -1,9 +1,8 @@
+import InputStatus from "@/components/shared/InputStatus";
 import Logo from "@/components/shared/Logo";
 import MainHeading from "@/components/shared/MainHeading";
 import OperatorId from "@/components/shared/OperatorId";
 import TotalReadyInputs from "@/components/shared/TotalReadyInputs";
-
-const inputStatusLabel = ["callsign", "email", "password", "confirm", "terms"];
 
 export default function DesktopView() {
   return (
@@ -24,15 +23,7 @@ export default function DesktopView() {
             <TotalReadyInputs />
           </div>
 
-          <div className="text-neutral-300 mt-8 space-y-4">
-            {inputStatusLabel.map((item) => (
-              <div key={item} className="w-full flex gap-2 items-center">
-                <p>{item}</p>
-                <div className="w-full border-b border-b-neutral-600 border-dotted"></div>
-                <p>pending</p>
-              </div>
-            ))}
-          </div>
+          <InputStatus />
         </div>
       </div>
     </div>
