@@ -174,4 +174,3 @@ AI suggestions were treated as guidance rather than assumed to be correct: I com
 - Frontend Mentor solution: [gamer-form-with-vite-and-stunk](https://www.frontendmentor.io/solutions/gamer-form-with-vite-and-stunk-i92Hs575Dd)
 - Live project: [gamer-form-repro.vercel.app](https://gamer-form-repro.vercel.app/)
 
-Add your preferred name, Frontend Mentor profile, or other public profile here when you want visitors to be able to find more of your work.
